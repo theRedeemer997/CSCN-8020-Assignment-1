@@ -94,28 +94,28 @@ Now $V_1$ captures which neighbors are promising. When we compute $Q_1(s,a)=R(s)
 ### Policy evaluation (compute $Q_1(s,a)$ from $V_1$)
 
 - **s1**  
-  up→$s_1$: $5 + 0.9\cdot 5 = 9.5$  
-  right→$s_2$: $5 + 0.9\cdot 10 = 14.0$  
-  down→$s_3$: $5 + 0.9\cdot 1 = 5.9$  
-  left→$s_1$: $5 + 0.9\cdot 5 = 9.5$
+  up→ $s_1$ : $5 + 0.9\cdot 5 = 9.5$  
+  right→ $s_2$ : $5 + 0.9\cdot 10 = 14.0$  
+  down→ $s_3$ : $5 + 0.9\cdot 1 = 5.9$  
+  left→ $s_1$ : $5 + 0.9\cdot 5 = 9.5$
 
 - **s2**  
-  up→$s_2$: $10 + 0.9\cdot 10 = 19.0$  
-  right→$s_2$: $10 + 0.9\cdot 10 = 19.0$  
-  left→$s_1$: $10 + 0.9\cdot 5 = 14.5$  
-  down→$s_4$: $10 + 0.9\cdot 2 = 11.8$
+  up→ $s_2$ : $10 + 0.9\cdot 10 = 19.0$  
+  right→ $s_2$ : $10 + 0.9\cdot 10 = 19.0$  
+  left→ $s_1$ : $10 + 0.9\cdot 5 = 14.5$  
+  down→ $s_4$ : $10 + 0.9\cdot 2 = 11.8$
 
 - **s3**  
-  up→$s_1$: $1 + 0.9\cdot 5 = 5.5$  
-  right→$s_4$: $1 + 0.9\cdot 2 = 2.8$  
-  down→$s_3$: $1 + 0.9\cdot 1 = 1.9$  
-  left→$s_3$: $1 + 0.9\cdot 1 = 1.9$
+  up→ $s_1$ : $1 + 0.9\cdot 5 = 5.5$  
+  right→ $s_4$ : $1 + 0.9\cdot 2 = 2.8$  
+  down→ $s_3$ : $1 + 0.9\cdot 1 = 1.9$  
+  left→ $s_3$ : $1 + 0.9\cdot 1 = 1.9$
 
 - **s4**  
-  up→$s_2$: $2 + 0.9\cdot 10 = 11.0$  
-  left→$s_3$: $2 + 0.9\cdot 1 = 2.9$  
-  right→$s_4$: $2 + 0.9\cdot 2 = 3.8$  
-  down→$s_4$: $2 + 0.9\cdot 2 = 3.8$
+  up→ $s_2$ : $2 + 0.9\cdot 10 = 11.0$  
+  left→ $s_3$ : $2 + 0.9\cdot 1 = 2.9$  
+  right→ $s_4$ : $2 + 0.9\cdot 2 = 3.8$  
+  down→ $s_4$ : $2 + 0.9\cdot 2 = 3.8$
 
 **Compact $Q_1$ table:**
 
