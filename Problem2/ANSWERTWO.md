@@ -40,31 +40,31 @@ We start with all zeros, so the “future” term $\gamma V_0(s')$ is zero.
 
 ### 2) **Policy evaluation calculations** (explicit $Q_0$ from $V_0$)
 
-- **State $s_1$** (neighbors: up/left→$s_1$, right→$s_2$, down→$s_3$)  
+- **State $s_1$** (neighbors: up/left→ $s_1$, right→ $s_2$, down→ $s_3$ )  
   $Q_0(s_1,\text{up}) = 5 + 0.9\cdot V_0(s_1) = 5 + 0 = 5$  
   $Q_0(s_1,\text{right}) = 5 + 0.9\cdot V_0(s_2) = 5 + 0 = 5$  
   $Q_0(s_1,\text{down}) = 5 + 0.9\cdot V_0(s_3) = 5 + 0 = 5$  
   $Q_0(s_1,\text{left}) = 5 + 0.9\cdot V_0(s_1) = 5 + 0 = 5$
 
-- **State $s_2$** (up/right→$s_2$, left→$s_1$, down→$s_4$)  
+- **State $s_2$** (up/right→ $s_2$, left→ $s_1$, down→ $s_4$ )  
   $Q_0(s_2,\text{up}) = 10 + 0.9\cdot 0 = 10$  
   $Q_0(s_2,\text{right}) = 10 + 0.9\cdot 0 = 10$  
   $Q_0(s_2,\text{left}) = 10 + 0.9\cdot 0 = 10$  
   $Q_0(s_2,\text{down}) = 10 + 0.9\cdot 0 = 10$
 
-- **State $s_3$** (left/down→$s_3$, up→$s_1$, right→$s_4$)  
+- **State $s_3$** (left/down→ $s_3$, up→ $s_1$, right→ $s_4$)  
   $Q_0(s_3,\text{up}) = 1 + 0.9\cdot 0 = 1$  
   $Q_0(s_3,\text{right}) = 1 + 0.9\cdot 0 = 1$  
   $Q_0(s_3,\text{down}) = 1 + 0.9\cdot 0 = 1$  
   $Q_0(s_3,\text{left}) = 1 + 0.9\cdot 0 = 1$
 
-- **State $s_4$** (right/down→$s_4$, up→$s_2$, left→$s_3$)  
+- **State $s_4$** (right/down→ $s_4$, up→ $s_2$, left→ $s_3$)  
   $Q_0(s_4,\text{up}) = 2 + 0.9\cdot 0 = 2$  
   $Q_0(s_4,\text{right}) = 2 + 0.9\cdot 0 = 2$  
   $Q_0(s_4,\text{down}) = 2 + 0.9\cdot 0 = 2$  
   $Q_0(s_4,\text{left}) = 2 + 0.9\cdot 0 = 2$
 
-**Compact $Q_0$ table (same result):**
+**Compact $Q_0$ table :**
 
 | State |  up | right | down | left |
 | ----: | --: | ----: | ---: | ---: |
@@ -75,7 +75,7 @@ We start with all zeros, so the “future” term $\gamma V_0(s')$ is zero.
 
 ### 3) Policy improvement and value update
 
-- Greedy action per state: all actions tie; choose a consistent tie-break (e.g., **up**).
+- Greedy action per state: all actions tie, here we choosing **up**
 - Update values: $V_1(s)=\max_a Q_0(s,a)$
 
 | State | $V_1(s)$ |
@@ -89,7 +89,7 @@ We start with all zeros, so the “future” term $\gamma V_0(s')$ is zero.
 
 ## Iteration 2
 
-Now $V_1$ captures which neighbors are promising. When we compute $Q_1(s,a)=R(s)+\gamma V_1(s')$, states that can move into (or stay in) high-value neighbors (like $s_2$) get larger values. The greedy policy begins to point **toward $s_2$**.
+Now $V_1$ captures which neighbors are promising. When we compute $Q_1(s,a)=R(s)+\gamma V_1(s')$, states that can move into or stay in high-value neighbors to get larger values (like $s_2$). The greedy policy begins to point **toward $s_2$**.
 
 ### Policy evaluation (compute $Q_1(s,a)$ from $V_1$)
 
