@@ -49,8 +49,6 @@ Iterations: **9**, Time: **0.4 ms**
 **Equivalence check:**  
 `Max |V_batch - V_inplace| = 0.000e+00` (identical within numerical tolerance)
 
-- ![equivalence](./screenshots/equivalence.png)
-
 ---
 
 ## Task 2 — Value Iteration Variations
