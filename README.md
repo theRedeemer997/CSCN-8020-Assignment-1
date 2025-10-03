@@ -19,8 +19,8 @@ A compact, reproducible walkthrough of Problems 1–4 on a 5×5 Gridworld, using
 ## Setup & Run
 
 ```bash
-# (optional) create venv
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+# create venv
+python -m venv .venv && source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
