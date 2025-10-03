@@ -11,10 +11,10 @@ A compact, reproducible walkthrough of Problems 1–4 on a 5×5 Gridworld, using
 
 ## Solutions
 
-- The solution of `Problem1` can be found in file inside with the name `ANSWER.md`
-- The solution of `Problem2` can be found in file inside with the name `ANSWERTWO.md`
-- The solution of `Problem3` can be found in file inside with the name`solution.md`
-- The solution of `Problem4` can be found in file inside with the name `solution.md`
+- The solution of `Problem1` can be found in file inside the folder `Problem1` with the name `ANSWER.md`
+- The solution of `Problem2` can be found in file inside the folder `Problem2` with the name `ANSWERTWO.md`
+- The solution of `Problem3` can be found in file inside the folder `Problem3` with the name`solution.md`
+- The solution of `Problem4` can be found in file inside the folder `Problem4` with the name `solution.md`
 
 ## Setup & Run
 
