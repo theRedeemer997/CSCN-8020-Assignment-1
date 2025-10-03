@@ -25,52 +25,96 @@ Go to `Problem3` folder
 python mc_solved.py
 ```
 
-# Monte Carlo vs. Value Iteration — Comparison
+## DP Reference
 
-## Quick comparison (your runs)
+## V* (from value iteration)
+|       |       |       |       |       |
+|-------|-------|-------|-------|-------|
+| -0.43 |  0.63 |  1.81 |  3.12 |  4.58 |
+|  0.63 |  1.81 |  3.12 |  4.58 |  6.20 |
+|  1.81 |  3.12 |  4.58 |  6.20 |  8.00 |
+|  3.12 |  4.58 |  6.20 |  8.00 | 10.00 |
+|  4.58 |  6.20 |  8.00 | 10.00 | 10.00 |
 
-| Method                        |                    Time |                                                 Work / Operations |   Episodes | Result quality                                                             |
-| ----------------------------- | ----------------------: | ----------------------------------------------------------------: | ---------: | -------------------------------------------------------------------------- | --- | --------------------------------------- | ----------------- | -------------------------------------- |
-| **Value Iteration (DP)**      | **≈ 0.4 ms** (9 sweeps) |                                                     Per sweep: \( |          S |                                                                            | A   | = 25×4 = 100\) Q-evals → **~900** total | N/A (model-based) | Ground-truth \(V^\*\) / optimal policy |
-| **MC Prediction** (Always-Up) |            **450.2 ms** | **1,000,000** env steps (avg **200.00** steps/ep × **5,000** eps) |  **5,000** | \(V^\pi\) for a bad policy (strong negatives near top/grey)                |
-| **MC Control** (ε=0.1)        |            **227.5 ms** |             **142,685** env steps (avg **4.76** × **30,000** eps) | **30,000** | Approx \(V^\*\); **max diff** vs DP = **1.175**, **mean diff** = **0.500** |
+## Greedy policy (arrows)
+| → | → | → | ↓ | ↓ |
+|---|---|---|---|---|
+| → | → | → | → | ↓ |
+| → | ↓ | → | → | ↓ |
+| → | → | → | → | ↓ |
+| → | → | → | → | G |
 
-**Takeaway:** On this small 5×5 grid with a known model, **DP is fastest and exact**. MC Control is close but needs **many** samples.
+## Task 1 — MC Prediction (First-Visit)
 
----
+Policy: Always Up (action index 3)
 
-## Computational complexity (big-O)
+Episodes: 5,000 Time: 840.8 ms
 
-- **Value Iteration:** per sweep \( \Theta(|S||A|) \). Converges in ~\(O\!\big(\tfrac{1}{1-\gamma}\log \tfrac{1}{\varepsilon}\big)\) sweeps to tolerance \(\varepsilon\).
-- **Monte Carlo (Prediction/Control):** \( \Theta(\text{episodes} \times \text{avg episode length}) \). Variance decreases with more episodes; no model needed.
+Operations: total env steps = 1,000,000 · avg length = 200.00 steps/episode
 
----
+Estimated 
+V
+<sup>π</sup>
 
-## What stands out in your outputs
+| -1.00  | -1.00  | -1.00  | -1.00  | -5.00  |
+|--------|--------|--------|--------|--------|
+| -10.00 | -10.00 | -10.00 | -10.00 | -50.00 |
+| -10.00 | -10.00 | -10.00 | -10.00 | -46.00 |
+| -10.00 | -10.00 | -14.00 | -10.00 | -42.40 |
+| -14.00 | -10.00 | -13.60 | -10.00 |  10.00 |
 
-- **Speed:** DP did ~**900** Q-evaluations in ~**0.4 ms**.  
-  MC Control needed **142,685** environment steps in **~227.5 ms**.
-- **Accuracy:** DP is optimal; MC Control is **close** but not identical at 30k episodes (max \(|V*{\text{MC}}-V*{\text{DP}}|=1.175\), mean \(=0.500\)).
-- **Episodes:** DP uses **no episodes** (model-based).  
-  MC Prediction: **5k** long episodes (bad baseline → often hits max length).  
-  MC Control: **30k** short episodes (good learned policy → quick termination).
-- **Memory:** DP stores \(V(s)\) (\(|S|\)). MC Control stores \(Q(s,a)\) (\(|S||A|\)) plus counters (still tiny here).
-- **Assumptions:** DP **requires the model** (rewards & transitions). MC learns **from experience** (no model).
-- **Convergence behavior:** DP is a contraction mapping → deterministic convergence.  
-  MC is unbiased but **high-variance**; with fixed ε it’s near-optimal; with **GLIE** (decaying ε) it converges.
+`Interpretation`: With “Always Up,” top states often bump the wall (repeated −1), and the grey at (0,4) accumulates ≈ −5/(1−0.9)=−50. MC Prediction reflects the value of this fixed (poor) policy.
 
----
+## Task 2 — MC Control (ε-greedy)
+- ε: 0.1
 
-## How to make MC match DP more closely
+- Episodes: 30,000 Time: 468.4 ms
 
-- Increase control episodes (e.g., **100k+**).
-- Use **decaying ε** (e.g., \(0.1 \to 0.01\)).
-- Consider **every-visit** MC (often lower variance than first-visit).
-- Ensure reasonable episode cap (`max_steps`) to avoid overly long rollouts.
+- Operations: total env steps = 142,685 · avg length = 4.76 steps/episode
 
----
+## Approximate 
+V∗
+ (from MC Control):
 
-### Bottom line
+ | -1.34 | -0.24 |  0.63 |  2.42 |  4.05 |
+|-------|-------|-------|-------|-------|
+| -0.29 |  0.97 |  2.44 |  4.00 |  5.85 |
+|  0.98 |  2.43 |  4.14 |  5.89 |  7.85 |
+|  2.54 |  4.08 |  5.91 |  7.86 | 10.00 |
+|  4.09 |  5.84 |  7.83 | 10.00 | 10.00 |
 
-- With a **known model** and small \(|S|\), **Value Iteration** is the fastest path to \(V^_\) and \(\pi^_\).
-- When the **model is unknown**, **Monte Carlo** is slower/noisier but still learns toward the DP optimum given sufficient data.
+## Greedy policy learned (arrows):
+| → | ↓ | ↓ | ↓ | ↓ |
+|---|---|---|---|---|
+| ↓ | ↓ | → | → | ↓ |
+| → | ↓ | ↓ | ↓ | ↓ |
+| ↓ | → | → | → | ↓ |
+| → | → | → | → | G |
+
+
+
+```markdown
+**Numerical closeness (MC Control vs DP values):** max |V_MC − V_DP| = 1.175 · mean |V_MC − V_DP| = 0.500
+```
+
+## Performance & Complexity Comparison
+
+
+| Method                        | Time                    | Operations                          | Episodes   | Notes                                                  |
+|-------------------------------|-------------------------|-------------------------------------|------------|--------------------------------------------------------|
+| **Value Iteration (DP)**      | ≈ **0.4 ms** (9 sweeps)* | Per sweep: \|S\|\|A\|=25×4=100 ⇒ **~900** Q-evals total | N/A        | Exact V<sup>\*</sup>, optimal policy (requires model)   |
+| **MC Prediction** (Always-Up) | **840.8 ms**            | **1,000,000** env steps             | **5,000**  | Estimates V<sup>π</sup> for a fixed (poor) policy       |
+| **MC Control** (ε=0.1)        | **468.4 ms**            | **142,685** env steps               | **30,000** | Near-optimal V<sup>\*</sup> & greedy policy learned from experience |
+
+\* DP timing shown here is from a reference run; wall-clock varies by machine.
+
+### Asymptotic complexity (big-O)
+
+- **Value Iteration (DP):** per sweep Θ(\|S\|\|A\|). Converges in about O(1/(1-γ)log(1/ε)) sweeps to tolerance ε.
+- **Monte Carlo (Prediction/Control):** Θ(episodes × avg episode length). Unbiased but higher variance; no transition/reward model needed.
+
+### Observations (from your run)
+
+- **Speed:** DP finishes in a few sweeps; MC needs many sampled steps (trajectories).
+- **Accuracy:** DP is exact; MC Control is close and improves with more episodes or decaying ε.
+- **Memory:** DP stores V(s) (size \|S\|); MC Control stores Q(s,a) (size \|S\|\|A\|) plus counters.
