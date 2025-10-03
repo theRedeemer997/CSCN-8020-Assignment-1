@@ -1,7 +1,6 @@
 # gridworld.py
 # 5x5 deterministic GridWorld used by Value Iteration and Monte Carlo.
-# Rewards: regular = -1, grey = -5 at (0,4),(2,2),(3,0), goal = +10 at (4,4).
-# Reward is for the *landing* tile. Terminal is absorbing.
+# Rewards (per assignment): regular = -1, grey = -5 at (0,4),(2,2),(3,0), goal = +10 at (4,4).
 
 import numpy as np
 
@@ -12,18 +11,18 @@ class GridWorld:
         # Terminal (goal) at bottom-right (0-indexed row, col)
         self.terminal_state = (4, 4)
 
-        # Actions (dr, dc) — fixed order: Right, Left, Down, Up
+        # Action set: (dr, dc) in fixed order — Right, Left, Down, Up
         self.actions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         self.action_description = ["Right", "Left", "Down", "Up"]
 
-        # Reward map
+        # Reward map (state reward on landing)
         self.reward = np.ones((self.env_size, self.env_size), dtype=float) * -1.0
         self.grey_states = [(0, 4), (2, 2), (3, 0)]
         for (r, c) in self.grey_states:
             self.reward[r, c] = -5.0
         self.reward[self.terminal_state] = +10.0
 
-    # Helpers
+    # ---------- helpers ----------
     def get_size(self):
         return self.env_size
 
@@ -33,14 +32,17 @@ class GridWorld:
     def is_terminal_state(self, i, j):
         return (i, j) == self.terminal_state
 
-    # Environment step
+    # ---------- environment step ----------
     def step(self, action_index, i, j):
         """
-        Deterministic transition from (i,j) using action_index.
-        If off-grid, stay in place. Reward is for the landing tile.
+        Deterministic transition:
+        - From (i,j) take action actions[action_index].
+        - If off-grid, you stay in (i,j).
+        - Reward is for the landing tile.
+        - done=True iff landing tile is terminal.
         Returns: next_i, next_j, reward, done
         """
-        # Absorbing terminal
+        # absorbing terminal
         if self.is_terminal_state(i, j):
             return i, j, self.reward[i, j], True
 
