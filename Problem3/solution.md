@@ -27,11 +27,11 @@ Iterations: **9**, Time: **0.4 ms**
 
 **V\***:
 
-- ![Optimal_value_function_batch](<./screenshots/Optimal_value_function(batch).png>)
+- ![Optimal_value_function_batch](./screenshots/Optimal_batch.png)
 
 **π\*** (greedy policy):
 
-- ![greedy_policy_batch](<./screenshots/pi(batch).png>)
+- ![greedy_policy_batch](./screenshots/Greedy_Policy_batch.png)
 
 ### In-Place (Gauss–Seidel) Value Iteration
 
@@ -40,11 +40,11 @@ Iterations: **9**, Time: **0.4 ms**
 
 **V\***:
 
-- ![Optimal_value_function_batch](./screenshots/Optimal_value_function_in_place.png)
+- ![Optimal_value_function_batch](./screenshots/Greedy_Policy_inplace.png)
 
 **π\*** (greedy policy):
 
-- ![greedy_policy_batch](<./screenshots/pi(inplace).png>)
+- ![greedy_policy_batch](./screenshots/Optimal_inplace.png)
 
 **Equivalence check:**  
 `Max |V_batch - V_inplace| = 0.000e+00` (identical within numerical tolerance)
